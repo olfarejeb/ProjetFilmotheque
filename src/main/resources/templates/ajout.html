@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Liste des films </title>
+<meta name="viewport" content="width=device-width ,initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $("#ajout").submit(function(e){
+        var langage = $('#acteurs').children("option:selected").val();
+      if(langage == "-1")  
+		{
+			 alert('il faut selectionné au moin un acteur');
+			e.preventDefault();	       
+	     } 
+      });
+    });
+    </script>
+ 
+</head>
+<body>
+<div class="container">
+<h1> Saisie un nouveau film</h1>
+<form action="/film/add" method="post" id="ajout" enctype="multipart/form-data">
+<p>
+<label for="titre" class="form-label">Titre du film </label>
+<input type="text" name="titre" id="titre" class="form-control">
+<span th:text="${message}"></span>
+</p>
+<p>
+<label for="description" class="form-label">Description du film </label>
+<textarea rows="5" minlength="10" name="description" class="form-control" ></textarea>
+</p>
+<p>
+<label for="anne" class="form-label">Annee parution du film </label>
+<input type="number" min="1950" max="2022" name="anneeparution" id="annee" class="form-control" required>
+</p>
+<p>
+<label for="categorie" class="form-label">Categorie du film </label>
+<select name="categorie" class="form-select">
+ <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.nom}"></option>
+</select>
+</p>
+<p>
+<label for="acteurs " class="form-label">Acteurs </label>
+<select name="acteurs" class="form-select" id="acteurs" multiple>
+ <option th:each="a : ${acteurs}" th:value="${a.id}" th:text="${a.nom}"></option>
+ <option value="-1" selected></option>
+</select>
+<p> 
+<label for="avatar">Photos</label>
+
+<input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">
+<input type="submit" class="btn btn-outline-primary" value="ajouter">
+</p>
+</form>
+</div>
+</body>
+
+</html>
