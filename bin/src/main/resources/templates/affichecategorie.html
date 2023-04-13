@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Liste des films </title>
+<meta name="viewport" content="width=device-width ,initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="container mt-4">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+  
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" th:href="@{/film/all}">Gestion Films </a>
+      <a class="nav-item nav-link" th:href="@{/categorie/all}">Gestion Categories</a>
+      <a class="nav-item nav-link" th:href="@{/acteur/allacteur}">Gestion Acteurs</a>
+    
+    </div>
+  </div>
+</nav>
+
+ <h1> Liste des CATEGORIES</h1>
+  <table class="table table-hover">
+   <td><a th:href="@{/categorie/new}" class="btn btn-outline-primary"  >ajouter</a>
+    
+    </tr>
+    <tr style="background-color: #cccccc;">
+     <th>#</th>
+     <th>NOM</th>
+     <th>FILMS</th>
+     <th>ACTION</th>
+    </tr>
+    <tr th:each="f :${categories}">
+     <td th:text="${f.id}"></td>
+     <td th:text="${f.nom}"></td>
+   
+      <td><li  th:each="a : ${f.films}" th:value="${a.id}" th:text="${a.titre}">
+     <ol th:text="${a.titre}" >
+     </li></td>
+     <td><form th:action="@{/categorie/delete/{id} (id=${f.id})}" th:method="delete">
+     <input type="submit" value="supprimer" class="btn btn-outline-danger" onclick="return confirm('voulez vous supprimer ?')">
+     </form>
+     <a th:href="@{/categorie/modif/{id} (id=${f.id})}"  class="btn btn-outline-warning" >modifier</a></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

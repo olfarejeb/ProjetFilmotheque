@@ -1,0 +1,30 @@
+version: '3'
+services:
+  web:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    container_name: gitlab
+    hostname: 'gitlab.example.com'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://192.168.48.129:80'
+        gitlab_rails['gitlab_shell_ssh_port'] = 443
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - '/home/olfa/gitlab/config:/etc/gitlab'
+      - '/home/olfa/gitlab/logs:/var/log/gitlab'
+      - '/home/olfa/gitlab/data:/var/opt/gitlab'
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "9090:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+volumes:
+  jenkins_home:
+    external: true
+
